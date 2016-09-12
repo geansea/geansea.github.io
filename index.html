@@ -1,12 +1,10 @@
 ---
-layout: default
-title: 我的Blog
+layout: home
 ---
 
-<h2>{{ page.title }}</h2>
-<p>最新文章</p>
+<h3>Recent posts</h3>
 <ul>
-  {% for post in site.posts %}
-  <li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+  {% for post in site.posts limit:5 %}
+  <li><span>{{ post.date | date_to_string }}<span> <a href="{{ site.baseurl }}{{ post.url }}" target="_blank">{{ post.title }}</a></li>
   {% endfor %}
 </ul>

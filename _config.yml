@@ -2,3 +2,6 @@
 baseurl: "."
 title: Geansea Bay
 description: ...
+
+kramdown:
+  hard_wrap: true

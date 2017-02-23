@@ -10,9 +10,10 @@ categories: Kindle
 
 ## 越狱
 
-这是后面所有事情的前提：
+这是我们的第一步：
 
-> [Lu Yifan 的越狱包](http://yifan.lu/p/kindle-jailbreak/)，可以支持固件 3.1 （本文写成时的最新版本）和以下版本。
+> [Lu Yifan 的越狱包](http://yifan.lu/p/kindle-jailbreak/)
+> 可以支持固件 3.1 （本文写成时的最新版本）和以下版本。
 > 译注：最新越狱方法可以参考 [Kindle 伴侣的总结](https://kindlefere.com/skills/jailbreak)。
 
 越狱后就可以进行开发了，不需要再安装其他东西。
@@ -25,9 +26,33 @@ categories: Kindle
 
 ## 开发工具
 
-Kindle 应用使用 Java 开发。
+Kindle 应用使用 Java 开发。用的是 Personal Basis Profile 1.1 和 Java 1.4 这两个古老而可怕的版本，并且被大量定制，提供了一组额外的专有库来访问 e-ink 屏幕以及 Kindle 本地 UI。
+
+> [Personal Basis Profile 1.1 Javadoc](http://download.oracle.com/javame/config/cdc/ref-impl/pbp1.1.2/jsr217/index.html)
+> PBP 1.1 的文档，这是你 Java 编程的基础。
+
+> [Kindle Development Kit Javadoc](http://kdk-javadocs.s3.amazonaws.com/index.html?overview-summary.html)
+> Kindle 专有库的文档（由亚马逊维护）。
+
+当然，为了能够基于 Kindle 库来编译代码，你需要获取一份拷贝：最简单的方法就是把它从 Kindle 里提取出来。为此，请使用以下  **更新包**。安装后，它会将 Kindle 的整个库目录拷贝到 `/lib` 目录下。你唯一需要的 `jar` 是 `Kindlet-1.2.jar`，但我们仍然拷贝其他的以免错过可能有趣的东西。
+
+> [Kindle 库提取器](http://cowlark.com/kindle/jarextractor-0.1.zip)（11.5 kB）
+> 一个一次性更新包，注意根据设备选取对应的 `.bin` 文件。
+
+获取后，把它添加到构建路径。
 
 ## 应用签名
+
+Kindle 只允许运行签名的程序，并会在运行前验证签名。这意味着：
+* 你必须有开发者私钥来给应用签名。
+* 任何人想要使用你的应用都必须先安装开发者公钥。
+
+所以，你现在需要生成一组开发者密钥。
+
+> [Kindle 开发者密钥生成器](http://cowlark.com/kindle/keygen-0.1.zip)（9.5 kB）
+> 一个粗略但可维护的脚本集，生成Kindle开发人员私人和公共密钥，并生成一组Kindle更新包，所有的公钥都安装到设备上。 （这是Andrew de Quincey的一些优秀工具，它们实际上在做所有的工作）。
+
+得到 `developer.keystore` 后，请将它保管好。然后在 Kindle 上安装相应的公钥更新包。
 
 ## 一步到位
 

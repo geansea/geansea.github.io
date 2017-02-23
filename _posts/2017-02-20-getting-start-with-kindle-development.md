@@ -58,7 +58,7 @@ Kindle 只允许运行签名的程序，并会在运行前验证签名。这意�
 
 读到这里，你应该已经能够构建、安装和运行应用。但为了节省时间，我事先准备了这个：
 
-> ['Hello, World' sample application](http://cowlark.com/kindle/HelloWorld.zip)（552.0 kB）
+> [Hello World 示例](http://cowlark.com/kindle/HelloWorld.zip)（552.0 kB）
 > 一个可构建的应用示例，以及用于编译、打包和签名的脚本。
 
 这个包里为你准备好了所有必需的资源。解压缩并运行 `./makekindlet` 脚本，你会得到一个 `HelloWorld.azw2` 文件，然后就可以导入到你的 Kindle 上。另外可能还包含一些 Eclipse 项目文件。

@@ -11,13 +11,15 @@ categories: Cocoa
 
 标准的 SAX 解析，简单使用时只需要实现三个 `delegate`：
 
-```Objective-C
-- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(nullable NSString *)namespaceURI qualifiedName:(nullable NSString *)qName attributes:(NSDictionary<NSString *, NSString *> *)attributeDict;
-
-- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(nullable NSString *)namespaceURI qualifiedName:(nullable NSString *)qName;
-
-- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string;
+{% highlight objc %}
 ```
+- (void)parser: didStartElement: namespaceURI: qualifiedName: attributes:;
+
+- (void)parser: didEndElement: namespaceURI: qualifiedName:;
+
+- (void)parser: foundCharacters:;
+```
+{% endhighlight %}
 
 ## 优点
 

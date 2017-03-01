@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 【翻译】Kindle Paperwhile 开发入门
+title: 【翻译】Kindle Paperwhite 开发入门
 author: Geansea
 date: 2017-02-28
 categories: Kindle
@@ -45,59 +45,65 @@ cowlark.com 介绍的 Kindle 库提取器没有提供 Kindle 3 之后的版本�
 
 ### 3. 创建开发者密钥并导入设备
 
-To successfully run your Kindlet on a device you have to sign the project with your developer key. The public key must also be installed on the device you want to run the Kindlet. You can create the keys by yourself.
+为了顺利在设备上运行你的 Kindlet 应用，你需要用开发者密钥签名，相应的公钥也需要安装到设备上。你可以自己生成密钥。（译注：更建议使用 **公用** 密钥，不用自己生成，并且易于分发。例如使用 KUAL 的密钥，基本越狱设备上都有。）
 
-We use the keygen-0.1 tool (from http://cowlark.com/kindle/getting-started.html) to generate a key pair for our user. This tutorial assumes you use a password of password for your keystores. Just execute the keygen script and follow the advice on the screen. As a result you should get two files. A developer.keystore and a public.keystore - use these files for signing the project (developer part) and upload to target device (public part)
+我们使用 keygen-0.1（来自 cowlark.com）来生成密钥，只需要运行 keygen 脚本然后按照屏幕提示操作。最后你会得到两个文件，一个 developer.keystore（用于签名），一个 public.keystore（需要导入到设备用于验证）。
 
-3.1 Local installation of keystore
+#### 3.1 本地 keystore 安装
 
-Copy new developer.keystore to ~/.kindle/kindle.keystore
+拷贝 developer.keystore 文件到 ~/.kindle/kindle.keystore。
 
-3.2 Install keystore on remote
+#### 3.2 设备 keystore 安装
 
-Because the keygen creates no installer.bin for the paperwhite you have to merge the keystores manually. This involves a few more steps than the local installation but we got help from a tool. This is done by the Java keytool (keytool-Key and Certificate Management Tool). Basically the steps are simple.
+keygen 无法生成适用 Paperwhite 的安装包，所以我们需要手动导入。这比本地安装要多好几个步骤，好在我们有工具帮助。我们使用 Java keytool（keytool - Key and Certificate Management Tool），基本上步骤很简单。
 
-Download developer.keystore from Device (/var/local/java/keystore/)
-Make a backup copy of the .keystore files (original and new one)
-Merge remote developer.keystore and new public.keystore locally with keytool (See syntax below)
-Upload the merged keystore to /var/local/java/keystore/ (Replace or better rename old developer.keystore)
-Syntax keytool:
+1. 从设备获取 developer.keystore（位于/var/local/java/keystore/）
+2. 备份 .keystore 文件（原始的和新的）
+3. 在本地用 keytool 将设备 developer.keystore 和新的 public.keystore 合并（参考下面的语法）
+4. 将合并后的 developer.keystore 导入设备的 /var/local/java/keystore/ 路径（替换或将旧的改名）
 
+**keytool 语法：**
+
+```shell
 keytool -importkeystore -srckeystore public.keystore -destkeystore developer.keystore
+```
 
-Important!
+**注意！**
 
-You have to restart the device after you changed the keys
+修改后需要重启设备。
 
 ### 4. 修改源代码以便基于 Kindlet-2.2.jar 编译
 
 你可以在教程最下方的 **资源下载** 部分获取最终版本，也可以下载 [cowlark.com 的原始版本](http://cowlark.com/kindle/HelloWorld.zip)并修改源代码以便基于 Kindlet-2.2.jar 编译。
 
-#### 4.1 Detailed amendments
+#### 4.1 详细改动
 
 ##### 4.1.1 Main.java
 
-Basically the only thing you have to change here is the KTextArea. In API 2.2 it does not exist anymore. But we can safely use JTextArea. Your source could look something like this:
+基本上这里需要改的只有 `KTextArea`，它在 API 2.2 里已经不存在了，但我们可以安全地使用 `JTextArea`。源代码应该为如下样子：
 
+```java
 import com.amazon.kindle.kindlet.KindletContext;
 import javax.swing.JTextArea;
 import com.cowlark.kindlet.KindletWrapper;
 
 public class Main extends KindletWrapper {
-  JTextArea kta = null;
+    JTextArea kta = null;
   
-  @Override
-  public void onKindletStart() {
-      KindletContext context = getContext();
-      kta = new JTextArea("Hello World V2 example for Kindlet-2.2.jar");
-      context.getRootContainer().add(kta);
-  }
+    @Override
+    public void onKindletStart() {
+        KindletContext context = getContext();
+        kta = new JTextArea("Hello World V2 example for Kindlet-2.2.jar");
+        context.getRootContainer().add(kta);
+    }
 }
+```
 
-##### 4.1.2 Manifest file
+##### 4.1.2 Manifest 文件
 
-The projects manifest file for API 2.2 has 3 more properties you have to set. If you fail to you get a compiler error. The manifest should read as follows:
+API 2.2 的 manifest 文件增加了三个必须设置的属性，否则会得到编译错误。manifest 应该为如下样子：
 
+```shell
 Manifest-Version: 1.0
 Main-Class: ch.kimhauser.kindle.helloworldv2.Main
 Implementation-Title: HelloWorldV2
@@ -106,11 +112,13 @@ Implementation-Vendor: Kim David Hauser
 Extension-List: SDK
 SDK-Extension-Name: com.amazon.kindle.kindlet
 SDK-Specification-Version: 2.1
+```
 
-4.1.3 Extension: Usage of KMenu and KOptionPane.showMessageDialog 
+##### 4.1.3 拓展：`KMenu` 和 `KOptionPane.showMessageDialog` 的使用
 
-Adding a menu to the top left standard menu is a piece of cake. Use a new KMenu and add MenuItems to it in onKindletStart. When you're done you can use the setMenu function on the KindletContext. The menu then will be appended to the existing one(s). You can use an ActionListener on the menu items to catch the selection event. This example shows you the Action command of the selected menu item with a message box (KOptionPane.showMessageDialog). The source looks like this:
+要在左上角添加一个标准菜单是小事一桩。在 `onKindletStart` 里创建一个 `KMenu` 并添加 `KMenuItem` 对象，然后调用 `KindletContext` 的 `setMenu` 方法。你可以在目录项上使用 `ActionListener` 来截取选择事件。下面的例子通过信息框（`KOptionPane.showMessageDialog`）显示了选择菜单项后的操作指令，源代码如下：
 
+```java
 public class Main extends KindletWrapper implements ActionListener {
 
 @Override
@@ -120,6 +128,8 @@ public void onKindletStart() {
     KMenu mnu = new KMenu();
     mnu.add("Example Menu", this);
     context.setMenu(mnu);
+    ...
+}
 
 ...
 
@@ -127,15 +137,17 @@ public void onKindletStart() {
 public void actionPerformed(ActionEvent arg0) {
     KOptionPane.showMessageDialog(getContext().getRootContainer(), "Action command: " + arg0.getActionCommand());
 }
+```
 
-5. Compile, pack and sign source
+### 5. 编译、打包并签名
 
-To compile the project you can either import the ant build.xml into Eclipse (via menu New > Project > Java > Project from existing Ant Buildfile) and build it with Eclipse (Create a new builder: Project properties > Builders > New > Antbuilder) or run the makekindlet script directly from within console if you have ant installed on your system
+要编译工程，你可以把 ANT 的 build.xml 导入 Eclipse（通过菜单 New > Project > Java > Project from existing Ant Buildfile），然后使用 Eclipse 构建（创建一个新的构建：Project properties > Builders > New > Antbuilder）。或者，如果你已经安装了 ANT，直接在终端运行 makekindlet 脚本即可。
 
-5.1 Makefile
+#### 5.1 脚本构建
 
-The makekindlet script will compile the project and create a signed azw2 file you can upload to your device. It looks like this
+makekindlet 脚本会编译并签名，最终得到一个 azw2 文件来上传到设备。脚本内容为：
 
+```shell
 #!/bin/sh
 FILENAME=HelloWorldV2
 KEYSTORE=$HOME/.kindle/kindle.keystore
@@ -149,24 +161,26 @@ cp $FILENAME.jar $JAR
 jarsigner -keystore $KEYSTORE -storepass password $JAR dk$USER
 jarsigner -keystore $KEYSTORE -storepass password $JAR di$USER
 jarsigner -keystore $KEYSTORE -storepass password $JAR dn$USER
+```
 
-6. Upload azw2 to device
+### 6. 把 azw2 上传到设备
 
-If everything has gone well you now should be ready to upload the created azw2 file to the device at /mnt/us/documents. For example you can use the following commands to modify the above script
+如果一切顺利，你现在应该准备把 azw2 文件上传到设备的 /mnt/us/documents 目录了（译注：/mnt/us 是以 USB 存储设备连接时的根目录）。比如说你可以把下面的命令加到上面的脚本末尾：
 
+```shell
 ssh root@192.168.15.244 rm -f /mnt/us/documents/$JAR
 scp $JAR root@192.168.15.244:/mnt/us/documents
+```
 
-Source & Downloads
-Hello World V2 for Paperwhite (K5)
-HelloWorldV2.zip (715 KB - 29.06.2013)
+## 资源下载
+* 适用于 Paperwhite 的 [Hello World V2][hello_world_v2]（715 KB）
+* cowlark.com 原版 [Hello World][hello_world]
+* 用于生成密钥的 [keygen-0.1][keygen]
 
-Original Hello World from cowlark.com
-http://cowlark.com/kindle/HelloWorld.zip (alternative download)
+[hello_world_v2]: http://www.kimhauser.ch/downloads/kindle/HelloWorldV2.zip
+[hello_world]: http://cowlark.com/kindle/HelloWorld.zip
+[keygen]: http://cowlark.com/kindle/keygen-0.1.zip
 
-keygen-0.1 (for signing project)
-http://cowlark.com/kindle/keygen-0.1.zip (alternative download)
-
-Credits
-Original tutorial by http://cowlark.com
-Amendments for Kindle Paperwhite FW 5.3.5 by Kim Hauser
+## 致谢
+* cowlark.com 的[教程][previous_en]
+* Kim Hauser（译注：本文作者）的 Amendments for Kindle Paperwhite FW 5.3.5

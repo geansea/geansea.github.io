@@ -12,13 +12,13 @@ categories: Cocoa
 标准的 SAX 解析，简单使用时只需要实现三个 `delegate`：
 
 {% highlight objc %}
-```
+
 - (void)parser: didStartElement: namespaceURI: qualifiedName: attributes:;
 
 - (void)parser: didEndElement: namespaceURI: qualifiedName:;
 
 - (void)parser: foundCharacters:;
-```
+
 {% endhighlight %}
 
 ## 优点

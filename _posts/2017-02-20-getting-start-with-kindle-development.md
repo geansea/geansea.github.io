@@ -3,6 +3,7 @@ layout: default
 title: 【翻译】Kindle 开发入门
 author: Geansea
 date: 2017-02-20
+update: 2017-03-01
 categories: Kindle
 ---
 

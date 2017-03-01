@@ -3,6 +3,7 @@ layout: default
 title: 【翻译】Kindle Paperwhite 开发入门
 author: Geansea
 date: 2017-02-28
+update: 2017-03-01
 categories: Kindle
 ---
 
@@ -64,7 +65,7 @@ keygen 无法生成适用 Paperwhite 的安装包，所以我们需要手动导�
 
 **keytool 语法：**
 
-```shell
+```Shell
 keytool -importkeystore -srckeystore public.keystore -destkeystore developer.keystore
 ```
 
@@ -82,7 +83,7 @@ keytool -importkeystore -srckeystore public.keystore -destkeystore developer.key
 
 基本上这里需要改的只有 `KTextArea`，它在 API 2.2 里已经不存在了，但我们可以安全地使用 `JTextArea`。源代码应该为如下样子：
 
-```java
+```Java
 import com.amazon.kindle.kindlet.KindletContext;
 import javax.swing.JTextArea;
 import com.cowlark.kindlet.KindletWrapper;
@@ -103,7 +104,7 @@ public class Main extends KindletWrapper {
 
 API 2.2 的 manifest 文件增加了三个必须设置的属性，否则会得到编译错误。manifest 应该为如下样子：
 
-```shell
+```Shell
 Manifest-Version: 1.0
 Main-Class: ch.kimhauser.kindle.helloworldv2.Main
 Implementation-Title: HelloWorldV2
@@ -118,7 +119,7 @@ SDK-Specification-Version: 2.1
 
 要在左上角添加一个标准菜单是小事一桩。在 `onKindletStart` 里创建一个 `KMenu` 并添加 `KMenuItem` 对象，然后调用 `KindletContext` 的 `setMenu` 方法。你可以在目录项上使用 `ActionListener` 来截取选择事件。下面的例子通过信息框（`KOptionPane.showMessageDialog`）显示了选择菜单项后的操作指令，源代码如下：
 
-```java
+```Java
 public class Main extends KindletWrapper implements ActionListener {
 
 @Override
@@ -147,7 +148,7 @@ public void actionPerformed(ActionEvent arg0) {
 
 makekindlet 脚本会编译并签名，最终得到一个 azw2 文件来上传到设备。脚本内容为：
 
-```shell
+```Shell
 #!/bin/sh
 FILENAME=HelloWorldV2
 KEYSTORE=$HOME/.kindle/kindle.keystore
@@ -167,7 +168,7 @@ jarsigner -keystore $KEYSTORE -storepass password $JAR dn$USER
 
 如果一切顺利，你现在应该准备把 azw2 文件上传到设备的 /mnt/us/documents 目录了（译注：/mnt/us 是以 USB 存储设备连接时的根目录）。比如说你可以把下面的命令加到上面的脚本末尾：
 
-```shell
+```Shell
 ssh root@192.168.15.244 rm -f /mnt/us/documents/$JAR
 scp $JAR root@192.168.15.244:/mnt/us/documents
 ```

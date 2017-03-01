@@ -65,9 +65,9 @@ keygen 无法生成适用 Paperwhite 的安装包，所以我们需要手动导�
 
 **keytool 语法：**
 
-```Shell
+{% highlight shell %}
 keytool -importkeystore -srckeystore public.keystore -destkeystore developer.keystore
-```
+{% endhighlight %}
 
 **注意！**
 
@@ -83,7 +83,7 @@ keytool -importkeystore -srckeystore public.keystore -destkeystore developer.key
 
 基本上这里需要改的只有 `KTextArea`，它在 API 2.2 里已经不存在了，但我们可以安全地使用 `JTextArea`。源代码应该为如下样子：
 
-```Java
+{% highlight java %}
 import com.amazon.kindle.kindlet.KindletContext;
 import javax.swing.JTextArea;
 import com.cowlark.kindlet.KindletWrapper;
@@ -98,13 +98,13 @@ public class Main extends KindletWrapper {
         context.getRootContainer().add(kta);
     }
 }
-```
+{% endhighlight %}
 
 ##### 4.1.2 Manifest 文件
 
 API 2.2 的 manifest 文件增加了三个必须设置的属性，否则会得到编译错误。manifest 应该为如下样子：
 
-```Shell
+{% highlight shell %}
 Manifest-Version: 1.0
 Main-Class: ch.kimhauser.kindle.helloworldv2.Main
 Implementation-Title: HelloWorldV2
@@ -113,13 +113,13 @@ Implementation-Vendor: Kim David Hauser
 Extension-List: SDK
 SDK-Extension-Name: com.amazon.kindle.kindlet
 SDK-Specification-Version: 2.1
-```
+{% endhighlight %}
 
 ##### 4.1.3 拓展：`KMenu` 和 `KOptionPane.showMessageDialog` 的使用
 
 要在左上角添加一个标准菜单是小事一桩。在 `onKindletStart` 里创建一个 `KMenu` 并添加 `KMenuItem` 对象，然后调用 `KindletContext` 的 `setMenu` 方法。你可以在目录项上使用 `ActionListener` 来截取选择事件。下面的例子通过信息框（`KOptionPane.showMessageDialog`）显示了选择菜单项后的操作指令，源代码如下：
 
-```Java
+{% highlight java %}
 public class Main extends KindletWrapper implements ActionListener {
 
 @Override
@@ -138,7 +138,7 @@ public void onKindletStart() {
 public void actionPerformed(ActionEvent arg0) {
     KOptionPane.showMessageDialog(getContext().getRootContainer(), "Action command: " + arg0.getActionCommand());
 }
-```
+{% endhighlight %}
 
 ### 5. 编译、打包并签名
 
@@ -148,7 +148,7 @@ public void actionPerformed(ActionEvent arg0) {
 
 makekindlet 脚本会编译并签名，最终得到一个 azw2 文件来上传到设备。脚本内容为：
 
-```Shell
+{% highlight shell %}
 #!/bin/sh
 FILENAME=HelloWorldV2
 KEYSTORE=$HOME/.kindle/kindle.keystore
@@ -162,16 +162,16 @@ cp $FILENAME.jar $JAR
 jarsigner -keystore $KEYSTORE -storepass password $JAR dk$USER
 jarsigner -keystore $KEYSTORE -storepass password $JAR di$USER
 jarsigner -keystore $KEYSTORE -storepass password $JAR dn$USER
-```
+{% endhighlight %}
 
 ### 6. 把 azw2 上传到设备
 
 如果一切顺利，你现在应该准备把 azw2 文件上传到设备的 /mnt/us/documents 目录了（译注：/mnt/us 是以 USB 存储设备连接时的根目录）。比如说你可以把下面的命令加到上面的脚本末尾：
 
-```Shell
+{% highlight shell %}
 ssh root@192.168.15.244 rm -f /mnt/us/documents/$JAR
 scp $JAR root@192.168.15.244:/mnt/us/documents
-```
+{% endhighlight %}
 
 ## 资源下载
 * 适用于 Paperwhite 的 [Hello World V2][hello_world_v2]（715 KB）

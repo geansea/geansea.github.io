@@ -13,20 +13,28 @@ body > *:last-child {
 }
 
 blockquote {
-   border-left: 4px solid #ddd;
-   padding: 1em;
-   color: #777;
+  border-left: 4px solid #ddd;
+  padding: 1em;
+  color: #777;
 }
 
 blockquote > :first-child {
-   margin-top: 0 !important;
+  margin-top: 0 !important;
 }
 
 blockquote > :last-child {
-   margin-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+figure {
+  margin: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px;
 }
 
 pre {
+  overflow: auto;
 }
 
 code {

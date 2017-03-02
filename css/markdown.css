@@ -35,11 +35,12 @@ table {
 }
 
 tr {
+  border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
 }
 
 td {
-  padding: 2px;
+  padding: 4px 8px;
 }
 
 figure {

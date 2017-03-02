@@ -22,7 +22,7 @@ categories: Kindle
 | 固件版本 | 5.3.5
 | API 版本 | 2.2 (Kindlet-2.2.jar)
 
-为了基于自己的 Kindlet 做开发，我想找个 Hello World 示例来入门，于是我搜索到了 [cowlark.com 的文章][previous_en]（译注：[翻译版](previous)）。虽然这篇文章提供了很好的 Kindle 开发入门知识，但是它是基于 Kindlet-1.2.jar 的，无法解决我的问题，我只好再次搜索 Kindle API 2.2 有什么改动。这就是我写这个 Hello World V2 示例的原因。它基于 cowlark.com 上的 Hello World 示例，增加了对于 Kindle API V 2.2（Kindlet-2.2.jar）的改动。另外，会向你演示 `KMenu`（Kindle Menu）和 `KOptionPane.showMessageDialog`（Message Box）的使用。这篇教程也展示了如何修改自动化脚本，之前的脚本是为老版本 Kindle 写的，不适用于 Paperwhite。为了更好地理解教程的内容，请先阅读 cowlark.com 的文章。
+为了基于自己的 Kindlet 做开发，我想找个 Hello World 示例来入门，于是我搜索到了 [cowlark.com 的文章][previous_en]（译注：[翻译版][previous]）。虽然这篇文章提供了很好的 Kindle 开发入门知识，但是它是基于 Kindlet-1.2.jar 的，无法解决我的问题，我只好再次搜索 Kindle API 2.2 有什么改动。这就是我写这个 Hello World V2 示例的原因。它基于 cowlark.com 上的 Hello World 示例，增加了对于 Kindle API V 2.2（Kindlet-2.2.jar）的改动。另外，会向你演示 `KMenu`（Kindle Menu）和 `KOptionPane.showMessageDialog`（Message Box）的使用。这篇教程也展示了如何修改自动化脚本，之前的脚本是为老版本 Kindle 写的，不适用于 Paperwhite。为了更好地理解教程的内容，请先阅读 cowlark.com 的文章。
 
 ## 概述
 1. 阅读 cowlark.com 的文章

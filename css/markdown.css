@@ -26,6 +26,19 @@ blockquote > :last-child {
   margin-bottom: 0 !important;
 }
 
+hr {
+  border: 1px inset #ccc;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 4px 0px;
+}
+
+tr {
+  border-bottom: 1px solid #ccc;
+}
+
 figure {
   margin: 1em;
   border: 1px solid #ccc;
@@ -34,6 +47,7 @@ figure {
 }
 
 pre {
+  margin: 4px;
   overflow: auto;
 }
 

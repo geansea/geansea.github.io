@@ -31,12 +31,15 @@ hr {
 }
 
 table {
-  border-collapse: separate;
-  border-spacing: 4px 0px;
+  border-collapse: collapse;
 }
 
 tr {
   border-bottom: 1px solid #ccc;
+}
+
+td {
+  padding: 2px;
 }
 
 figure {

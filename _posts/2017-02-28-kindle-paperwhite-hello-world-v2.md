@@ -3,7 +3,7 @@ layout: default
 title: 【翻译】Kindle Paperwhite 开发入门
 author: Geansea
 date: 2017-02-28
-update: 2017-03-01
+update: 2017-03-10
 categories: Kindle
 ---
 
@@ -75,7 +75,9 @@ keytool -importkeystore -srckeystore public.keystore -destkeystore developer.key
 
 ### 4. 修改源代码以便基于 Kindlet-2.2.jar 编译
 
-你可以在教程最下方的 **资源下载** 部分获取最终版本，也可以下载 [cowlark.com 的原始版本](http://cowlark.com/kindle/HelloWorld.zip)并修改源代码以便基于 Kindlet-2.2.jar 编译。
+你可以在教程最下方的 **资源下载** 部分获取最终版本，也可以下载 [cowlark.com 的原始版本][hello_world]并修改源代码以便基于 Kindlet-2.2.jar 编译。
+
+[hello_world]: http://cowlark.com/kindle/HelloWorld.zip
 
 #### 4.1 详细改动
 
@@ -179,8 +181,11 @@ scp $JAR root@192.168.15.244:/mnt/us/documents
 * 用于生成密钥的 [keygen-0.1][keygen]
 
 [hello_world_v2]: http://www.kimhauser.ch/downloads/kindle/HelloWorldV2.zip
-[hello_world]: http://cowlark.com/kindle/HelloWorld.zip
 [keygen]: http://cowlark.com/kindle/keygen-0.1.zip
+
+> 译注：Hello World V2 的下载已经失效，可以参考 [Github][hello_world_v2_github]。
+
+[hello_world_v2_github]: https://github.com/jetedonner/ch.kimhauser.kindle.HelloWorldV2
 
 ## 致谢
 * cowlark.com 的[教程][previous_en]

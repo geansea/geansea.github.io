@@ -33,8 +33,4 @@ categories: Kindle
 
 ## 中文显示
 
-这个也被坑了两天，一个是 `KLabel` 和 `KLabelMultiline` 默认不支持汉字，需要设置 `new Font("hans", Font.PLAIN, size)` 来显示中文字体，`hans` 这个字体名来自 /usr/java/lib/font.properties，要支持繁/日/韩的话也可以找到相应的 family name。
-
-另外就是在代码里写中文字符串，直接写是有问题的，无法正确显示，暂时找到的办法是用 `\uXXXX` 的写法。
-
-而 `KTextField` 和 `KTextArea` 不存在上面两个问题。
+`KLabel` 和 `KLabelMultiline` 默认不支持汉字，需要设置 `new Font("hans", Font.PLAIN, size)` 来显示中文字体，`hans` 这个字体名来自 /usr/java/lib/font.properties，要支持繁/日/韩的话也可以找到相应的 family name。`KTextField` 和 `KTextArea` 不存在这个问题。

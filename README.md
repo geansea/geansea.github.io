@@ -1,1 +1,1 @@
-# My blog: geansea.github.io
+My blog: geansea.github.io
